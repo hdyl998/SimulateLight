@@ -214,6 +214,7 @@ namespace TestLight
                 button1.Text = "开始考试";
                 label3.Text = "测试完成，合格";
                 label2.Text = "...";
+                readText(label3.Text);
             }
         }
 
@@ -269,10 +270,17 @@ namespace TestLight
 
                     int handleVar = (itemCur.getHandleValue() >> HANDLE_SHIFT);
                     int switchVar = itemCur.getSwitchValue();
-                    MessageBox.Show("考试不合格!\n 正确答案是:开关->" + switchs[switchVar].Text + " 操作区->" + (itemCur.isFlash()?"闪光灯": handles[handleVar].Text) + " 危险报警闪光灯->" + (itemCur.isDangerous()?"开":"关"));
+                    string text = "考试不合格!\n 正确答案是:开关->" + switchs[switchVar].Text + " 操作区->" + (itemCur.isFlash() ? "闪光灯" : handles[handleVar].Text) + " 危险报警闪光灯->" + (itemCur.isDangerous() ? "开" : "关");
+                    readText(text);
+                    MessageBox.Show(text);
                 }
 
             }
+        }
+
+        private void readText(string str) {
+            System.Speech.Synthesis.SpeechSynthesizer sp = new System.Speech.Synthesis.SpeechSynthesizer();
+            sp.SpeakAsync(str);
         }
 
 
@@ -316,6 +324,7 @@ namespace TestLight
                     RecordItem item = lists[maxTestCount];
                     itemCur = item;
                     label2.Text = string.Format("第{0:d}/{1:d}题 ",maxTestCount+1, MAX_TEST_COUNT) +item.text;
+                    readText(item.text);
                 }
             }
             else {
